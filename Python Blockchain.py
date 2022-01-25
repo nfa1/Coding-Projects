@@ -11,7 +11,7 @@ class Blockchain(object):
         self.new_block(previous_hash="The Times 03/Jan/2009 Chancellor on brink of second bailout for banks.",
                        proof=100)
 
-    # Create a new block listing key/value pairs of block information in a JSON object. Reset the list of pending transactions and append the newest block to the chain.
+    # Create a new block listing key/value pairs of block information in a JSON object. Reset the list of pending transactions & append the newest block to the chain.
 
     def new_block(self, proof, previous_hash=None):
         block = {
@@ -32,7 +32,7 @@ class Blockchain(object):
     def last_block(self):
         return self.chain[-1]
 
-    # Add a transaction with relevant info to the "blockpool" which is a list of pending transactions.
+    # Add a transaction with relevant info to the 'blockpool' - list of pending tx's.
 
     def new_transaction(self, sender, recipient, amount):
         transaction = {
@@ -43,7 +43,7 @@ class Blockchain(object):
         self.pending_transactions.append(transaction)
         return self.last_block['index'] + 1
 
-    # Receive one block. Turn it into a string, turn that into Unicode (for hashing). Hash with SHA256 encryption, then translate the Unicode into a hexidecimal string.
+    # receive one block. Turn it into a string, turn that into Unicode (for hashing). Hash with SHA256 encryption, then translate the Unicode into a hexidecimal string.
 
     def hash(self, block):
         string_object = json.dumps(block, sort_keys=True)
@@ -56,32 +56,14 @@ class Blockchain(object):
 
 
 blockchain = Blockchain()
-t1 = blockchain.new_transaction("Satoshi", "Michelle", '5 DAGE')
-t2 = blockchain.new_transaction("Michelle", "Satoshi", '1 DAGE')
-t3 = blockchain.new_transaction("Satoshi", "Elon", '5 DAGE')
+t1 = blockchain.new_transaction("Satoshi", "Mike", '5 BTC')
+t2 = blockchain.new_transaction("Mike", "Satoshi", '1 BTC')
+t3 = blockchain.new_transaction("Satoshi", "Hal Finney", '5 BTC')
 blockchain.new_block(12345)
 
-t4 = blockchain.new_transaction("Michelle", "Alejandro", '1 DAGE')
-t5 = blockchain.new_transaction("Alejandro", "Buffet", '0.5 DAGE')
-t6 = blockchain.new_transaction("Buffett", "Michelle", '0.5 DAGE')
+t4 = blockchain.new_transaction("Mike", "Alice", '1 BTC')
+t5 = blockchain.new_transaction("Alice", "Bob", '0.5 BTC')
+t6 = blockchain.new_transaction("Bob", "Mike", '0.5 BTC')
 blockchain.new_block(6789)
 
-t7 = blockchain.new_transaction("Michelle", "Alejandro", '0.5 DAGE')
-t8 = blockchain.new_transaction("Alejandro", "Buffet", '0.25 DAGE')
-t9 = blockchain.new_transaction("Buffett", "Michelle", '0.25 DAGE')
-blockchain.new_block(101112)
-
-t10 = blockchain.new_transaction("Satoshi", "Michelle", '2.5 DAGE')
-t11 = blockchain.new_transaction("Michelle", "Satoshi", '0.5 DAGE')
-t12 = blockchain.new_transaction("Satoshi", "Elon", '0.25 DAGE')
-blockchain.new_block(131415)
-
-
-print("DAGEcoin Genesis block: ", blockchain.chain)
-
-
-
-
-
-
-
+print("Genesis block: ", blockchain.chain)
